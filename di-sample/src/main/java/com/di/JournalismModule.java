@@ -13,28 +13,28 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 
-public class PayrollModule extends AbstractModule {
+public class JournalismModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(String.class)
             .annotatedWith(Names.named("JDBC URL"))
-            .toInstance("jdbc:sqlite:target/payroll.db");
+            .toInstance("jdbc:sqlite:target/journalism.db");
     }
 
     // Метод для надання списку працівників
     @Provides
     List<Person> provideEmployees() {
-        List<Person> employeeList = new ArrayList<>();
-        Employee employee1 = new Employee("John Doe");
-        employee1.setBonus(12000.00);
+        List<Person> journalistList = new ArrayList<>();
+        Journalist journalist1 = new Journalist("John Doe");
+        journalist1.setBonus("12000");
 
-        Employee employee2 = new Employee("Jane Smith");
-        employee2.setBonus(15000.00);
+        Journalist journalist2 = new Journalist("Jane Smith");
+        journalist2.setBonus("Biden");
 
-        employeeList.add(employee1);
-        employeeList.add(employee2);
+        journalistList.add(journalist1);
+        journalistList.add(journalist2);
         
-        return employeeList;
+        return journalistList;
     }
 
     @Provides
@@ -50,17 +50,17 @@ public class PayrollModule extends AbstractModule {
     }
 
     /**
-     * Створює таблицю "paychecks" у базі даних, якщо вона ще не існує.
+     * Створює таблицю "articles" у базі даних, якщо вона ще не існує.
      * Таблиця містить такі колонки:
-     * - amount: значення типу REAL, яке не може бути null, що представляє суму виплати.
+     * - title: значення типу REAL, яке не може бути null, що представляє суму виплати.
      * - pay_date: значення типу TEXT, яке не може бути null, що представляє дату виплати.
      *
      * @param connection з'єднання з базою даних, яке використовується для створення таблиці
      * @throws RuntimeException у разі виникнення помилки під час створення таблиці
      */
     private void createTableIfNotExists(Connection connection) {
-        String createTableSQL = "CREATE TABLE IF NOT EXISTS paychecks (" +
-                                "amount REAL NOT NULL, " +
+        String createTableSQL = "CREATE TABLE IF NOT EXISTS articles (" +
+                                "title TEXT NOT NULL, " +
                                 "pay_date TEXT NOT NULL)";
 
         try (Statement statement = connection.createStatement()) {

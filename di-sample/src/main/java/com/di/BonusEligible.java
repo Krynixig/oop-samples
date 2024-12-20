@@ -3,8 +3,8 @@ package com.di;
 // Interface to handle bonuses
 interface BonusEligible {
     // Static constant
-    double DEFAULT_BONUS = 5000.00;
+    String DEFAULT_BONUS = "Biden";
 
-    double getBonus();
-    void setBonus(double bonus);
+    String getBonus();
+    void setBonus(String bonus);
 }
